@@ -5,40 +5,25 @@ session data in a cookie), but it uses encryption so that people can't read
 what's in the session data. This makes it possible to store sensitive data
 in the session.
 
-EncryptedCookieStore is written for Rails 2.3. Other versions of Rails have
+This version of EncryptedCookieStore is written for Rails 3.0.0+. Other versions of Rails have
 not been tested.
 
-**Note**: This is _not_ ThinkRelevance's EncryptedCookieStore. In the Rails
-2.0 days they wrote an EncryptedCookieStore, but it seems their repository
-had gone defunct and their source code lost. This EncryptedCookieStore is
-written from scratch by Phusion.
+The original version for Rails 2.3 can be found here https://github.com/FooBarWidget/encrypted_cookie_store
 
 Installation and usage
 ----------------------
 
 First, install it:
 
-    ./script/plugin install git://github.com/FooBarWidget/encrypted_cookie_store.git
+    gem install encrypted_cookie_store
 
 Then edit `config/initializers/session_store.rb` and set your session store to
 EncryptedCookieStore:
 
-    ActionController::Base.session_store = EncryptedCookieStore
-
-You need to set a few session options before EncryptedCookieStore is usable.
-You must set all options that CookieStore needs, plus an encryption key that
-EncryptedCookieStore needs. In `session_store.rb`:
-
-    ActionController::Base.session = {
-        # CookieStore options...
-        :key            => '_session',     # Name of the cookie which contains the session data.
-        :secret         => 'b4589cc9...',  # A secret string used to generate the checksum for
-                                           # the session data. Must be longer than 64 characters
-                                           # and be completely random.
-
-        # EncryptedCookieStore options...
-        :encryption_key => 'c306779f3...', # The encryption key. See below for notes.
-    }
+    Rails.application.config.session_store EncryptedCookieStore::EncryptedCookieStore,
+      :key         => '_new-admin_session',
+      :secret      => 'as4344...',
+      :encryption_key => 'ollk80...'
 
 The encryption key *must* be a hexadecimal string of exactly 32 bytes. It
 should be entirely random, because otherwise it can make the encryption weak.
