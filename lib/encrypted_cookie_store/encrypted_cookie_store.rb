@@ -51,7 +51,7 @@ module EncryptedCookieStore
   		end
   	end
 	
-  	def marshal(session)
+  	def set_session(env, sid, session_data)
   		# We hmac-then-encrypt instead of encrypt-then-hmac so that we
   		# can properly detect:
   		# - changes to the encryption key or initialization vector
@@ -64,13 +64,26 @@ module EncryptedCookieStore
   		@iv_cipher.key   = @encryption_key
   		@data_cipher.key = @encryption_key
 		
-  		session_data     = super(session)
+  		clear_session_data = super(env, sid, session_data)
   		iv               = @data_cipher.random_iv
   		@data_cipher.iv  = iv
   		encrypted_iv     = @iv_cipher.update(iv) << @iv_cipher.final
-  		encrypted_session_data = @data_cipher.update(session_data) << @data_cipher.final
+  		encrypted_session_data = @data_cipher.update(Marshal.dump(clear_session_data)) << @data_cipher.final
 		
   		"#{base64(encrypted_iv)}--#{base64(encrypted_session_data)}"
+  	end
+
+    def unpacked_cookie_data(env)
+      env["action_dispatch.request.unsigned_session_cookie"] ||= begin
+        stale_session_check! do
+          request = ActionDispatch::Request.new(env)
+          if data = request.cookie_jar.signed[@key] && data.is_a?(String)
+            unmarshal(data)
+          else
+            {}
+          end
+        end
+      end
   	end
 	
   	def unmarshal(cookie)
@@ -87,8 +100,7 @@ module EncryptedCookieStore
   				@data_cipher.decrypt
   				@data_cipher.key = @encryption_key
   				@data_cipher.iv = iv
-  				session_data = @data_cipher.update(encrypted_session_data) << @data_cipher.final
-  				super(session_data)
+  				session_data = Marshal.load(@data_cipher.update(encrypted_session_data) << @data_cipher.final) rescue nil
   			end
   		else
   			nil
