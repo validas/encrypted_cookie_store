@@ -77,7 +77,7 @@ module EncryptedCookieStore
       env["action_dispatch.request.unsigned_session_cookie"] ||= begin
         stale_session_check! do
           request = ActionDispatch::Request.new(env)
-          if data = request.cookie_jar.signed[@key] && data.is_a?(String)
+          if (data = request.cookie_jar.signed[@key]) && data.is_a?(String)
             unmarshal(data)
           else
             {}
