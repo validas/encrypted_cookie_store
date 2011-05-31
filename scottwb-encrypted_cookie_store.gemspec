@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
+    ".rspec",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
@@ -29,7 +30,7 @@ Gem::Specification.new do |s|
     "lib/encrypted_cookie_store/railtie.rb",
     "lib/tasks/encrypted_cookie_store.rake",
     "scottwb-encrypted_cookie_store.gemspec",
-    "test/encrypted_cookie_store_test.rb"
+    "spec/encrypted_cookie_store_spec.rb"
   ]
   s.homepage = %q{https://github.com/scottwb/encrypted_cookie_store}
   s.require_paths = ["lib"]
