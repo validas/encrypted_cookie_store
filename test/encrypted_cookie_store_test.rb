@@ -1,9 +1,11 @@
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + "/../lib"))
 require 'rubygems'
-gem 'rails', '>= 3.0.0'
+gem 'rails', '>= 3.0.0.beta3'
+require 'rails'
+require 'action_controller'
 require 'encrypted_cookie_store'
 
-describe EncryptedCookieStore do
+describe EncryptedCookieStore::EncryptedCookieStore do
 	SECRET = "b6a30e998806a238c4bad45cc720ed55e56e50d9f00fff58552e78a20fe8262df61" <<
 		"42fcfdb0676018bb9767ed560d4a624fb7f3603b4e53c77ec189ae3853bd1"
 	GOOD_ENCRYPTION_KEY = "dd458e790c3b995e3606384c58efc53da431db892f585aa3ca2a17eabe6df75b"
@@ -11,7 +13,7 @@ describe EncryptedCookieStore do
 	OBJECT = { :user_id => 123, :admin => true, :message => "hello world!" }
 	
 	def create(options = {})
-		EncryptedCookieStore.new(nil, options.reverse_merge(
+		EncryptedCookieStore::EncryptedCookieStore.new(nil, options.reverse_merge(
 			:key => 'key',
 			:secret => SECRET
 		))
@@ -56,12 +58,12 @@ describe EncryptedCookieStore do
 		store = create(:encryption_key => GOOD_ENCRYPTION_KEY)
 		data  = store.send(:marshal, OBJECT)
 		iv_cipher = store.instance_variable_get(:@iv_cipher)
-		iv_cipher.should_receive(:update).and_raise(EncryptedCookieStore::OpenSSLCipherError)
+		iv_cipher.should_receive(:update).and_raise(EncryptedCookieStore::EncryptedCookieStore::OpenSSLCipherError)
 		store.send(:unmarshal, data).should be_nil
 	end
 	
 	it "invalidates the data if we just migrated from CookieStore" do
-		old_store = ActionController::Session::CookieStore.new(nil, :key => 'key', :secret => SECRET)
+		old_store = ActionDispatch::Session::CookieStore.new(nil, :key => 'key', :secret => SECRET)
 		legacy_data = old_store.send(:marshal, OBJECT)
 		store = create(:encryption_key => GOOD_ENCRYPTION_KEY)
 		store.send(:unmarshal, legacy_data).should be_nil

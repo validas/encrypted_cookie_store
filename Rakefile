@@ -1,6 +1,6 @@
 desc "Run unit tests"
 task :test do
-	sh "spec -f s -c test/*_test.rb"
+	sh "rspec -f s -c test/*_test.rb"
 end
 
 desc "Run benchmark"
@@ -36,14 +36,6 @@ require "rubygems"
 require "rake/gempackagetask"
 require "rake/rdoctask"
 
-require "rake/testtask"
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
-end
-
-
 task :default => ["test"]
 
 # This builds the actual gem. For details of what all these options
@@ -55,11 +47,11 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "encrypted_cookie_store"
-  s.version           = "0.2.0"
-  s.summary           = "A Rails 3 version of Encrypted Cookie Store by FooBarWidget"
-  s.authors           = ["FooBarWidget", "Ben Sales"]
-  s.email             = "ben@twoism.co.uk"
-  s.homepage          = "https://github.com/FooBarWidget/encrypted_cookie_store"
+  s.version           = "0.3.0"
+  s.summary           = "A Rails 3.0 version of Encrypted Cookie Store by FooBarWidget"
+  s.authors           = ["FooBarWidget", "Scott W. Bradley"]
+  s.email             = "scottwb@gmail.com"
+  s.homepage          = "https://github.com/scottwb/encrypted_cookie_store"
 
   s.has_rdoc          = true
   s.extra_rdoc_files  = %w(README.markdown)
@@ -71,10 +63,10 @@ spec = Gem::Specification.new do |s|
 
   # If you want to depend on other gems, add them here, along with any
   # relevant versions
-  # s.add_dependency("some_other_gem", "~> 0.1.0")
+  s.add_dependency("rails", "3.0.0.beta3")
 
   # If your tests use any gems, include them here
-  # s.add_development_dependency("mocha") # for example
+  s.add_development_dependency("rspec", "~> 2.6.3")
 end
 
 # This task actually builds the gem. We also regenerate a static
