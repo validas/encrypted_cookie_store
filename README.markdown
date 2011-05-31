@@ -5,25 +5,35 @@ session data in a cookie), but it uses encryption so that people can't read
 what's in the session data. This makes it possible to store sensitive data
 in the session.
 
-This version of EncryptedCookieStore is written for Rails 3.0.0+. Other versions of Rails have
-not been tested.
+This version of EncryptedCookieStore is written for Rails 3.0.0+. It will not work with Rails 3.0.0.beta3 or earlier. It does not yet work with Rails 3.1. It has been tested with:
 
-The original version for Rails 2.3 can be found here https://github.com/FooBarWidget/encrypted_cookie_store
+  * 3.0.0
+  * 3.0.7
+  * 3.0.8.rc4
+
+The original version for Rails 2.3 can be found here: https://github.com/FooBarWidget/encrypted_cookie_store
+
+For a version that probably works with Rails 3.0.0.beta - 3.0.0.beta3, check here: https://github.com/twoism-dev/encrypted_cookie_store
 
 Installation and usage
 ----------------------
 
 First, install it:
 
-    gem install encrypted_cookie_store
+    gem install scottwb-encrypted_cookie_store
+
+Then, add it to you bundler Gemfile:
+
+    gem 'scottwb-encrypted_cookie_store', :require => 'encrypted_cookie_store'
 
 Then edit `config/initializers/session_store.rb` and set your session store to
 EncryptedCookieStore:
 
-    Rails.application.config.session_store EncryptedCookieStore::EncryptedCookieStore,
-      :key         => '_new-admin_session',
-      :secret      => 'as4344...',
-      :encryption_key => 'ollk80...'
+    MyApp::Application.config.session_store(
+      EncryptedCookieStore::EncryptedCookieStore,
+      :key            => '_myapp_session',
+      :encryption_key => '966a4....'
+    )
 
 The encryption key *must* be a hexadecimal string of exactly 32 bytes. It
 should be entirely random, because otherwise it can make the encryption weak.
@@ -31,6 +41,10 @@ should be entirely random, because otherwise it can make the encryption weak.
 You can generate a new encryption key by running `rake secret:encryption_key`.
 This command will output a random encryption key that you can then copy and
 paste into your environment.rb.
+
+You also need to make sure you have a secret token defined in `config/initializers/secret_token.rb`, just as you work for the standard CookieStore, e.g.:
+
+    MyApp::Application.config.secret_token = 'f75bb....'
 
 Operational details
 -------------------

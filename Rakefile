@@ -46,7 +46,7 @@ task :default => ["test"]
 spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
-  s.name              = "encrypted_cookie_store"
+  s.name              = "scottwb-encrypted_cookie_store"
   s.version           = "0.3.0"
   s.summary           = "A Rails 3.0 version of Encrypted Cookie Store by FooBarWidget"
   s.authors           = ["FooBarWidget", "Scott W. Bradley"]
@@ -63,7 +63,7 @@ spec = Gem::Specification.new do |s|
 
   # If you want to depend on other gems, add them here, along with any
   # relevant versions
-  s.add_dependency("rails", "3.0.0.beta3")
+  s.add_dependency("rails", "~> 3.0.0")
 
   # If your tests use any gems, include them here
   s.add_development_dependency("rspec", "~> 2.6.3")
