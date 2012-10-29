@@ -1,4 +1,4 @@
-EncryptedCookieStore
+EncryptedCookieStore [![Build Status](https://secure.travis-ci.org/validas/encrypted_cookie_store.png)](http://travis-ci.org/validas/encrypted_cookie_store)
 ====================
 EncryptedCookieStore is similar to Ruby on Rails's CookieStore (it saves
 session data in a cookie), but it uses encryption so that people can't read
