@@ -11,7 +11,8 @@ module ActionDispatch
 
 
       def destroy_session(env, session_id, options)
-        new_sid = generate_sid unless options[:drop]
+        Rails.logger.info "DESTROYING SESSION"
+        new_sid = generate_sid
         # Reset hash and Assign the new session id
         env["action_dispatch.request.unsigned_session_cookie"] = new_sid ? { "session_id" => new_sid } : {}
         new_sid
@@ -71,6 +72,7 @@ module ActionDispatch
         sid ||= generate_sid
         session = unpacked_cookie_data(env)
         session ||= {}
+        Rails.logger.info "GET SESSION: #{sid}, #{session}"
         [sid, session]
       end
 
@@ -92,6 +94,7 @@ module ActionDispatch
         @data_cipher.iv  = iv
         encrypted_iv     = @iv_cipher.update(iv) << @iv_cipher.final
         encrypted_session_data = @data_cipher.update(Marshal.dump(clear_session_data)) << @data_cipher.final
+        Rails.logger.info "SET SESSION: #{base64(encrypted_iv)}--#{base64(encrypted_session_data)}"
         "#{base64(encrypted_iv)}--#{base64(encrypted_session_data)}"
       end
 
