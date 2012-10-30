@@ -12,12 +12,12 @@ require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
-  gem.name              = "scottwb-encrypted_cookie_store"
-  gem.homepage          = "https://github.com/scottwb/encrypted_cookie_store"
-  gem.summary           = "A Rails 3.0 version of Encrypted Cookie Store by FooBarWidget"
-  gem.description       = "A Rails 3.0 version of Encrypted Cookie Store by FooBarWidget"
+  gem.name              = "validas-encrypted_cookie_store"
+  gem.homepage          = "https://github.com/validas/encrypted_cookie_store"
+  gem.summary           = "A Rails 3.1 & 3.2 version of Encrypted Cookie Store by FooBarWidget"
+  gem.description       = "A Rails 3.1 & 3.2 version of Encrypted Cookie Store by FooBarWidget"
   gem.email             = "scottwb@gmail.com"
-  gem.authors           = ["FooBarWidget", "Scott W. Bradley"]
+  gem.authors           = ["FooBarWidget", "Scott W. Bradley", "Validas Engineering Team"]
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -69,12 +69,12 @@ task :benchmark do
 end
 
 
-require "rake/rdoctask"
+require "rdoc/task"
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = "rdoc"
-  rdoc.title    = "scottwb-encrypted_cookie_store #{version}"
+  rdoc.title    = "validas-encrypted_cookie_store #{version}"
   rdoc.rdoc_files.include("README*")
   rdoc.rdoc_files.include("lib/**/*.rb")
   #rdoc.main = "README.md"
