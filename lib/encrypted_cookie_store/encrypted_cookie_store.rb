@@ -67,6 +67,13 @@ module ActionDispatch
         session_data
       end
 
+      def get_session(env, sid)
+        sid ||= generate_sid
+        session = unpacked_cookie_data(env)
+        session ||= {}
+        [sid, session]
+      end
+
       def set_session(env, sid, session_data, options={})
         # We hmac-then-encrypt instead of encrypt-then-hmac so that we
         # can properly detect:
