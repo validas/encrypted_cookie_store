@@ -6,11 +6,7 @@ session data in a cookie), but it uses encryption so that people can't read
 what's in the session data. This makes it possible to store sensitive data
 in the session.
 
-This version of EncryptedCookieStore is written for Rails 3.0.0+. It will not work with Rails 3.0.0.beta3 or earlier. It does not yet work with Rails 3.1. It has been tested with:
-
-  * 3.0.0
-  * 3.0.7
-  * 3.0.8.rc4
+This version of EncryptedCookieStore is written for Rails 3.1.0+. It will not work with Rails 3.0.0 or earlier. It does work with Rails 3.2.
 
 The original version for Rails 2.3 can be found here: https://github.com/FooBarWidget/encrypted_cookie_store
 
@@ -21,11 +17,11 @@ Installation and usage
 
 First, install it:
 
-    gem install scottwb-encrypted_cookie_store
+    gem install validas-encrypted_cookie_store
 
 Then, add it to you bundler Gemfile:
 
-    gem 'scottwb-encrypted_cookie_store', :require => 'encrypted_cookie_store'
+    gem 'validas-encrypted_cookie_store', :require => 'encrypted_cookie_store'
 
 Then edit `config/initializers/session_store.rb` and set your session store to
 EncryptedCookieStore:
