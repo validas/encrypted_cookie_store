@@ -27,7 +27,7 @@ Then edit `config/initializers/session_store.rb` and set your session store to
 EncryptedCookieStore:
 
     MyApp::Application.config.session_store(
-      EncryptedCookieStore::EncryptedCookieStore,
+      ApplicationDispatch::Session::EncryptedCookieStore,
       :key            => '_myapp_session',
       :encryption_key => '966a4....'
     )

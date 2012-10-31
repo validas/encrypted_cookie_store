@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "validas-encrypted_cookie_store"
-  s.version = "0.4.1"
+  s.version = "0.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["FooBarWidget", "Scott W. Bradley", "Validas Engineering Team"]
-  s.date = "2012-10-30"
+  s.date = "2012-10-31"
   s.description = "A Rails 3.1 & 3.2 version of Encrypted Cookie Store by FooBarWidget"
   s.email = "scottwb@gmail.com"
   s.extra_rdoc_files = [
@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/encrypted_cookie_store.rb",
-    "lib/encrypted_cookie_store/constants.rb",
     "lib/encrypted_cookie_store/encrypted_cookie_store.rb",
     "lib/encrypted_cookie_store/railtie.rb",
     "lib/tasks/encrypted_cookie_store.rake",
